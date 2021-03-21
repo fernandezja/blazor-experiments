@@ -1,0 +1,73 @@
+﻿@page "/lifecycle"
+
+<h1>Lifecycle events</h1>
+
+<h2>Events</h2>
+<ul>
+    @foreach (var e in _events)
+    {
+        <li>
+            @e
+        </li>
+    }
+</ul>
+
+<h3>More info</h3>
+
+<div class="alert alert-info">
+    <a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/lifecycle" target="_blank">
+        [Docs] ASP.NET Core Blazor lifecycle
+    </a>
+</div>
+
+@code{
+    private List<string> _events = new List<string>();
+    private int _delayInMilliseconds = 1000;
+
+    protected override void OnInitialized()
+    {
+        _events.Add("OnInitialized...");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _events.Add($"OnInitializedAsync... (delay = {_delayInMilliseconds}ms)");
+        await Task.Delay(_delayInMilliseconds);
+    }
+
+    protected override void OnParametersSet()
+    {
+        _events.Add("OnParametersSet...");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _events.Add($"OnParametersSetAsync... (delay = {_delayInMilliseconds}ms)");
+        await Task.Delay(_delayInMilliseconds);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _events.Add($"OnAfterRender [FirstRender={firstRender}]...");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        _events.Add($"OnAfterRenderAsync [FirstRender={firstRender}]... (delay = {_delayInMilliseconds}ms)");
+        await Task.Delay(_delayInMilliseconds);
+    }
+
+    protected override bool ShouldRender()
+    {
+        _events.Add("ShouldRender...");
+        return true;
+    }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        _events.Add($"SetParametersAsync [Parameter View]... (delay = {_delayInMilliseconds}ms)");
+        await base.SetParametersAsync(parameters);
+        await Task.Delay(_delayInMilliseconds);
+    }
+
+}
