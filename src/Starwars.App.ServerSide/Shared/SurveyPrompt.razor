@@ -10,7 +10,87 @@
 </div>
 
 @code {
-    // Demonstrates how a parent component can supply parameters
     [Parameter]
     public string Title { get; set; }
+
+    [Parameter]
+    public List<string> Events { get; set; }
+
+    [Parameter]
+    public int DelayInMilliseconds { get; set; } = 0;
+
+    private string _prefix = "[Component] SurveyPrompt > ";
+
+    protected override void OnInitialized()
+    {
+        if (Events!=null)
+        {
+            Events.Add($"{_prefix} OnInitialized...");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Events != null)
+        {
+            Events.Add($"{_prefix} OnInitializedAsync... (delay = {DelayInMilliseconds}ms)");
+            await Task.Delay(DelayInMilliseconds);
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Events != null)
+        {
+            Events.Add($"{_prefix} OnParametersSet...");
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Events != null)
+        {
+            Events.Add($"{_prefix} OnParametersSetAsync... (delay = {DelayInMilliseconds}ms)");
+            await Task.Delay(DelayInMilliseconds);
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (Events != null)
+        {
+            Events.Add($"{_prefix}OnAfterRender [FirstRender={firstRender}]...");
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Events != null)
+        {
+            Events.Add($"OnAfterRenderAsync [FirstRender={firstRender}]... (delay = {DelayInMilliseconds}ms)");
+            await Task.Delay(DelayInMilliseconds);
+        }
+    }
+
+    protected override bool ShouldRender()
+    {
+        if (Events != null)
+        {
+            Events.Add($"{_prefix}ShouldRender...");
+        }
+        return true;
+    }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        if (Events != null)
+        {
+            Events.Add($"{_prefix}SetParametersAsync [Parameter View]... (delay = {DelayInMilliseconds}ms)");
+
+        }
+
+        await base.SetParametersAsync(parameters);
+        await Task.Delay(DelayInMilliseconds);
+    }
+
 }

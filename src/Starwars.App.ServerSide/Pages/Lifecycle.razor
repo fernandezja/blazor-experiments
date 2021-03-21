@@ -3,6 +3,11 @@
 <h1>Lifecycle events</h1>
 
 <h2>Events</h2>
+
+<SurveyPrompt Title="How is Blazor working for you? Component with parameters"
+              Events="_events"
+              DelayInMilliseconds="_delayInMilliseconds"/>
+
 <ul>
     @foreach (var e in _events)
     {
