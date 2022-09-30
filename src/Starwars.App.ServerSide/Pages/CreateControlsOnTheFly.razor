@@ -1,0 +1,109 @@
+﻿@page "/create-controls-on-the-fly"
+
+<h1>Create Controls (on-the-fly)</h1>
+
+<h2>Config</h2>
+<div class="form-inline">
+    <div class="form-group row">
+        <label for="rows" class="sr-only">Rows</label>
+        <input type="text" class="form-control" id="rows" @bind="_rows">
+    </div>
+    <div class="form-group row">
+        <label for="rows" class="sr-only">Columns</label>
+        <input type="text" class="form-control" id="rows" @bind="_columns">
+    </div>
+    <button class="btn btn-primary mb-2" @onclick="OnCreateControlsClick">Create controls</button>
+</div>
+
+@if (_isCreated)
+{
+    <table>
+        <thead>
+            <tr>
+                @for (int col = 0; col < _columns; col++)
+                {
+                    <th>Col @col</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int r = 0; r < _rows; r++)
+            {
+                <tr>
+                    @for (int c = 0; c < _columns; c++)
+                    {
+                    <td>
+                        <input type="text" class="form-control" id="input-@r-@c"
+                               @bind="_values[BuildKey(r, c)]" />
+                        @*<input type="text" class="form-control" id="input-@r-@c"
+                               @bind-value="_values[BuildKey(r, c)]"
+                               @onchange="@(ChangeEventArgs e => _values["1-1"] = e.)" />*@
+
+                        @*<InputText id="name"
+                                   Value="@_values[BuildKey(r, c)].ToString()"
+                                   ValueChanged="( (string s) => ValueChanged(s, BuildKey(r, c)))"></InputText>*@
+
+                    </td>
+                    }
+                </tr>
+            }
+        </tbody>
+        @*<tfoot>
+            <tr>
+                @for (int i = 0; i < _totals.GetLength(0); i++)
+                {
+                    <td>
+                        <strong><span title="Total column @i">@_totals[i]</span></strong>
+                    </td>
+                }
+            </tr>
+        </tfoot>*@
+    </table>
+}
+
+
+@code{
+    private int _rows = 3;
+    private int _columns = 3;
+
+    private bool _isCreated = false;
+    private Dictionary<string, string> _values;
+    private int[] _totals;
+
+    private string BuildKey(int row, int column) {
+        return $"{row}-{column}";
+    }
+
+    
+
+    private void OnCreateControlsClick()
+    {
+        _values = new Dictionary<string, string>();
+
+        for (int r = 0; r < _rows; r++)
+        {
+            for (int c = 0; c < _columns; c++)
+            {
+                _values.Add($"{r}-{c}", "0");
+            }
+        }
+
+        _totals = new int[_columns];
+
+        _isCreated = true;
+        //StateHasChanged();
+    }
+
+    //void OnInputKeyUp(KeyboardEventArgs e, int column)
+    //{
+    //    var totalColumn = 0;
+    //    for (int row = 0; row < _values.GetLength(0); row++)
+    //    {
+    //        totalColumn = _values[row, column-1];
+    //    }
+
+    //    _totals[column-1] = totalColumn;
+    //    StateHasChanged();
+    //}
+
+}
