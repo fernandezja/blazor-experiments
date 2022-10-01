@@ -1,9 +1,9 @@
 ﻿@page "/todo"
 
-        <PageTitle>Mis To Dos</PageTitle>
+    <PageTitle>Mis To Dos</PageTitle>
        
-@*>     <h1>To Dos Pendientes: (@toDos.Count(todo => !todo.EstaCompletado))</h1>
-*@
+    <h1>To Dos Pendientes: (@toDos.Count(todo => !todo.EstaCompletado))</h1>
+
 <table>
     <thead class= "py-5">
         <th class="col-lg-3">Completado?</th>
@@ -12,7 +12,7 @@
         <th class="col-lg-3">Fecha de Entrega</th>
     </thead>
 
-    @*@foreach(var toDo in toDos)
+    @foreach(var toDo in toDos)
     {
         <tr>
             <td><input type="checkbox" @bind="toDo.EstaCompletado"/></td>
@@ -20,31 +20,39 @@
             <td>@toDo.Contenido</td>
             <td>@toDo.FechaEntrega</td>
         </tr>
-    }*@
+    }
 </table>
 
 <h2>Añade Nuevos To Dos</h2>
-@*
+
+<label>Titulo</label>
 <input placeholder="Añadir Titulo" @bind = "nuevoTitulo"/>
+<br /> 
+<label>Contenido</label>
 <input placeholder="Añadir Contenido" @bind="nuevoContenido" />
-<button @onclick= AddToDo >Añadir To Do</button>*@
+<br /> 
+
+<button @onclick="AddToDo">Añadir To Do</button>
 
 @code 
 {
-    //private string? nuevoTitulo;
-    //private string? nuevoContenido;
-    //private List<ToDoItem> toDos = new(); 
-    //private void AddToDo()
-    //{
-    //    // Añade el To Do
-    //    if(!string.IsNullOrWhiteSpace(nuevoTitulo))
-    //    {
-    //        toDos.Add(new ToDoItem { 
-    //            Titulo = nuevoTitulo, 
-    //            Contenido = nuevoContenido , 
-    //            FechaEntrega = new DateOnly(2022,1,31)
-    //        });
-    //        nuevoTitulo = string.Empty;
-    //    }
-    //}
+    private string? nuevoTitulo;
+    private string? nuevoContenido;
+    private List<ToDoItem> toDos = new(); 
+
+    private void AddToDo()
+    {
+
+        if(!string.IsNullOrWhiteSpace(nuevoTitulo))
+        {
+            toDos.Add(new ToDoItem { 
+                Titulo = nuevoTitulo, 
+                Contenido = nuevoContenido , 
+                FechaEntrega = new DateOnly(2022,1,31)
+            });
+
+            nuevoTitulo = string.Empty;
+            nuevoContenido = string.Empty;
+        }
+    }
 }
