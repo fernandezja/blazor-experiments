@@ -1,0 +1,50 @@
+﻿@page "/todo"
+
+        <PageTitle>Mis To Dos</PageTitle>
+       
+@*>     <h1>To Dos Pendientes: (@toDos.Count(todo => !todo.EstaCompletado))</h1>
+*@
+<table>
+    <thead class= "py-5">
+        <th class="col-lg-3">Completado?</th>
+        <th class="col-lg-3">Titulo</th>
+        <th class="col-lg-3">Contenido</th>
+        <th class="col-lg-3">Fecha de Entrega</th>
+    </thead>
+
+    @*@foreach(var toDo in toDos)
+    {
+        <tr>
+            <td><input type="checkbox" @bind="toDo.EstaCompletado"/></td>
+            <td>@toDo.Titulo</td>
+            <td>@toDo.Contenido</td>
+            <td>@toDo.FechaEntrega</td>
+        </tr>
+    }*@
+</table>
+
+<h2>Añade Nuevos To Dos</h2>
+@*
+<input placeholder="Añadir Titulo" @bind = "nuevoTitulo"/>
+<input placeholder="Añadir Contenido" @bind="nuevoContenido" />
+<button @onclick= AddToDo >Añadir To Do</button>*@
+
+@code 
+{
+    //private string? nuevoTitulo;
+    //private string? nuevoContenido;
+    //private List<ToDoItem> toDos = new(); 
+    //private void AddToDo()
+    //{
+    //    // Añade el To Do
+    //    if(!string.IsNullOrWhiteSpace(nuevoTitulo))
+    //    {
+    //        toDos.Add(new ToDoItem { 
+    //            Titulo = nuevoTitulo, 
+    //            Contenido = nuevoContenido , 
+    //            FechaEntrega = new DateOnly(2022,1,31)
+    //        });
+    //        nuevoTitulo = string.Empty;
+    //    }
+    //}
+}
