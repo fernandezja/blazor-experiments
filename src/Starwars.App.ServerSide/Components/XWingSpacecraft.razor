@@ -1,0 +1,15 @@
+﻿@namespace Starwars.App.ServerSide.Components
+@inherits SpacecraftBaseComponent;
+@{
+    base.BuildRenderTree(__builder);
+}
+
+<img src="images/XWing.webp" title="@Name" width="250px" />
+
+@code {
+
+    public XWingSpacecraft()
+    {
+        Name = "X-Wing";
+    }
+}

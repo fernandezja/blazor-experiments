@@ -1,0 +1,28 @@
+﻿@namespace Starwars.App.ServerSide.Components
+<h3>@Name</h3>
+
+@if (ChildContent is not null)
+{
+    @ChildContent
+}
+
+
+
+@code {
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public SpacePosition SpacePosition { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+
+    public virtual bool Build()
+    {
+        return true;
+    }
+
+}

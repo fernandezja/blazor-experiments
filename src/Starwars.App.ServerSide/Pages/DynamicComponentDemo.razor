@@ -1,0 +1,44 @@
+﻿@page "/dynamicComponent"
+
+<h1>Dynamic Components</h1>
+
+
+<InputSelect TValue="string"
+             Value="_spacecraftTypeName"
+             ValueExpression="@(() => _spacecraftTypeName)"
+             ValueChanged="SpacecraftTypeChanged">
+    @foreach (var item in _spacecraftsTypes)
+    {
+        <option value="@item">@item</option>
+    }    
+</InputSelect>
+
+<DynamicComponent @ref="_componentDynamic"
+                  Type="_spacecraftTypeSelected" />
+
+
+
+@code {
+
+    DynamicComponent _componentDynamic;
+    Type _spacecraftTypeSelected = typeof(XWingSpacecraft);
+    string _spacecraftTypeName;
+
+    private List<string> _spacecraftsTypes = new List<string>();
+
+
+    protected override void OnInitialized()
+    {
+        _spacecraftsTypes.Add(typeof(XWingSpacecraft).ToString());
+        _spacecraftsTypes.Add(typeof(TIEFighterSpacecraft).ToString());
+
+        //base.OnInitialized();
+    }
+
+
+    protected void SpacecraftTypeChanged(string value)
+    {
+        _spacecraftTypeSelected = Type.GetType(value);
+    }
+
+}
